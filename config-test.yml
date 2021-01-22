@@ -1,0 +1,34 @@
+server:
+  port: 80
+
+eureka:
+  client:
+    #是否将自己注册到注册中心, 默认true
+    register-with-eureka: false
+    #是否从EurekaServer抓取已有的注册信息,单机无所谓,集群必须设置为true配合ribbon使用负载均衡
+    fetch-registry: true
+    service-url:
+      #      defaultZone: http://localhost:7001/eureka  #单机版
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka #集群版
+
+#设置feign客户端超时时间(OpenFeign 默认支持ribbon)
+ribbon:
+  #指的是建立连接所用时间,适用于网络状况正常情况下,两端连接所用时间
+  ReadTimeout: 5000
+  #指的是连接建立后,从服务器获取到可用资源所用时间
+  ConnectTimeout: 5000
+
+#  局部配置
+#  cloud-payment-service:
+#    ribbon:
+#      OkToRetryOnAllOperations: true # 对所有请求都进行重试
+#      MaxAutoRetries: 2              # 对当前实例的重试次数
+#      MaxAutoRetriesNextServer: 0    # 切换实例的重试次数
+#      ConnectTimeout: 3000           # 请求连接的超时时间
+#      ReadTimeout: 3000              # 请求处理的超时时间
+
+
+#feign 日志以什么级别监控那个接口
+logging:
+  level:
+    com.george.springcloud.service: debug
